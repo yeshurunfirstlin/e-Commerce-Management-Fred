@@ -13,7 +13,7 @@ public static class ServiceContainer
     {
         services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite(configuration.GetConnectionString("e-CommerceConnectionString")));
 
-        services.AddScoped<IUnitOfWork, IUnitOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IProductRepository, ProductRepository>(); 
 
