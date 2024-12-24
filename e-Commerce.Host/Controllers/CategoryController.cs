@@ -1,4 +1,5 @@
-﻿using e_Commerce.Application.Features.Categories.Command;
+﻿using e_Commerce.Application.DTOs.Categories;
+using e_Commerce.Application.Features.Categories.Command;
 using e_Commerce.Application.Features.Categories.Query;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -22,10 +23,10 @@ namespace e_Commerce.Host.Controllers
         }
 
         [HttpPost("add-category")]
-        public async Task<IActionResult> CreateCategory(CreateCategoryCommand command)
+        public async Task<IActionResult> CreateCategory(CreateCategoryRequest Category)
         {
-            var _category = await _mediator.Send(command);
-            return Ok(command);
+            var _category = await _mediator.Send(new CreateCategoryCommand(Category));
+            return Ok(_category);
         }
 
     }

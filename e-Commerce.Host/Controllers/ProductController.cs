@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using e_Commerce.Application.DTOs.Products;
 using e_Commerce.Application.Features.Products.Command;
 using e_Commerce.Application.Features.Products.Query;
 using MediatR;
@@ -19,14 +20,14 @@ namespace e_Commerce.Host.Controllers
         public async Task<IActionResult> GetAll()
         {
             var _products = await _mediator.Send(new GetAllProductQuery());
-            return Ok();
+            return Ok(_products);
         }
 
         [HttpPost("add-product")]
-        public async Task<IActionResult> CreateProduct(CreateProductCommand command)
+        public async Task<IActionResult> CreateProduct(CreateProductRequest Product)
         {
-            var _product = await _mediator.Send(command);
-            return Ok(command);
+            var _product = await _mediator.Send(new CreateProductCommand(Product));
+            return Ok(_product);
         }
     }
 }

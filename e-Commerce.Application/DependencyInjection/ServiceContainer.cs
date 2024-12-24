@@ -1,4 +1,5 @@
 ﻿using e_Commerce.Application.Common.AutoMapper;
+using e_Commerce.Application.Features.Categories.Command;
 using e_Commerce.Application.Features.Categories.Validation;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,10 +11,12 @@ public static class ServiceContainer
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddMediatR(cfg =>
-        {
-            cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-        });
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCategoryCommand).Assembly));
+        //services.AddMediatR(cfg =>
+        //{
+        //    cfg.RegisterServicesFromAssembly(typeof(CreateCategoryCommand).Assembly);
+        //    //cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+        //});
 
         services.AddValidatorsFromAssemblyContaining<CreateCategoryValidator>();
         services.AddAutoMapper(typeof(MapperConfig));
