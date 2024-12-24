@@ -1,9 +1,7 @@
-﻿using AutoMapper;
-using e_Commerce.Application.DTOs.Products;
+﻿using e_Commerce.Application.DTOs.Products;
 using e_Commerce.Application.Features.Products.Command;
 using e_Commerce.Application.Features.Products.Query;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace e_Commerce.Host.Controllers
@@ -23,11 +21,32 @@ namespace e_Commerce.Host.Controllers
             return Ok(_products);
         }
 
+        [HttpGet("byid-product")]
+        public async Task<IActionResult> GetByIdProduct(int id)
+        {
+            var _product = await _mediator.Send(new GetProductByIdQuery(id));
+            return Ok(_product);
+        }
+
         [HttpPost("add-product")]
         public async Task<IActionResult> CreateProduct(CreateProductRequest Product)
         {
-            var _product = await _mediator.Send(new CreateProductCommand(Product));
-            return Ok(_product);
+            var _newProduct = await _mediator.Send(new CreateProductCommand(Product));
+            return Ok(_newProduct);
+        }
+
+        [HttpPut("update-product")]
+        public async Task<IActionResult> UpdateProduct(UpdateProductRequest Product)
+        {
+            var _upProduct = await _mediator.Send(new UpdateProductCommand(Product));
+            return Ok(_upProduct);
+        }
+
+        [HttpDelete("delete-product")]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            var _delProduct = await _mediator.Send(new DeleteProductCommand(id));
+            return Ok(_delProduct);
         }
     }
 }
